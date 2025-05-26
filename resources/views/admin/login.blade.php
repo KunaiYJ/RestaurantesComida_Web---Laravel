@@ -37,13 +37,13 @@
                                 <div class="mb-4 mb-md-5 text-center">
                                     <a href="index.html" class="d-block auth-logo">
                                         <img src="{{ asset('backend/assets/images/logo-sm.svg') }}" alt=""
-                                            height="28"> <span class="logo-txt">Minia</span>
+                                            height="28"> <span class="logo-txt">Login Administrador</span>
                                     </a>
                                 </div>
                                 <div class="auth-content my-auto">
                                     <div class="text-center">
                                         <h5 class="mb-0">¡ Bienvenido !</h5>
-                                        <p class="text-muted mt-2">Sign in to continue to Minia.</p>
+                                        <p class="text-muted mt-2">Inicia Sesion para continuar como Administrador.</p>
                                     </div>
 
                                     @if ($errors->any())
