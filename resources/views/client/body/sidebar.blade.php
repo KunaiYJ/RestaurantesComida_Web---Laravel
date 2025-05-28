@@ -18,18 +18,38 @@
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i data-feather="grid"></i>
-                        <span data-key="t-apps">Apps</span>
+                        <span data-key="t-apps">Menu</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li>
-                            <a href="apps-calendar.html">
-                                <span data-key="t-calendar">Calendar</span>
+                            <a href="{{ route('all.menu') }}">
+                                <span data-key="t-calendar">Todos los Menu</span>
                             </a>
                         </li>
 
                         <li>
-                            <a href="apps-chat.html">
-                                <span data-key="t-chat">Chat</span>
+                            <a href="{{ route('add.menu') }}">
+                                <span data-key="t-chat">Agregar Menu</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <i data-feather="grid"></i>
+                        <span data-key="t-apps">Producto</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li>
+                            <a href="{{ route('all.product') }}">
+                                <span data-key="t-calendar">Todos los Productos</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('add.menu') }}">
+                                <span data-key="t-chat">Agregar Producto</span>
                             </a>
                         </li>
                     </ul>
