@@ -12,7 +12,7 @@
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <a href="{{ route('add.menu') }}" 
+                            <a href="{{ route('add.product') }}" 
                                 class="btn btn-success btn-rounded d-flex align-items-center gap-2">
                                 <i class="bx bxs-plus-circle bx-md"></i>Agregar Producto
                             </a>

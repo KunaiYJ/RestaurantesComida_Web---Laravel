@@ -48,7 +48,7 @@
                         </li>
 
                         <li>
-                            <a href="{{ route('add.menu') }}">
+                            <a href="{{ route('add.product') }}">
                                 <span data-key="t-chat">Agregar Producto</span>
                             </a>
                         </li>
