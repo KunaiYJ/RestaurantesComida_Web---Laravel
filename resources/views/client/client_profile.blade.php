@@ -5,132 +5,114 @@
 <div class="page-content">
     <div class="container-fluid">
 
-        <!-- start page title -->
-        <div class="row">
+        <div class="row mb-4">
             <div class="col-12">
-                <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                    <h4 class="mb-sm-0 font-size-18">Perfil de Usuario</h4>
-
-                    <div class="page-title-right">
-                        <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="javascript: void(0);">Contacts</a></li>
-                            <li class="breadcrumb-item active">Perfil de Usuario</li>
-                        </ol>
-                    </div>
-
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0">Perfil de Usuario</h4>
+                    <ol class="breadcrumb mb-0">
+                        <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+                        <li class="breadcrumb-item active">Perfil</li>
+                    </ol>
                 </div>
             </div>
         </div>
-        <!-- end page title -->
 
         <div class="row">
-            <div class="col-xl-9 col-lg-8">
-                <div class="card rounded-4 shadow-lg">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-sm order-2 order-sm-1">
-                                <div class="d-flex align-items-start mt-3 mt-sm-0">
-                                    <div class="flex-shrink-0">
-                                        <div class="avatar-xl me-3">
-                                            <img src="{{ !empty($profileData->photo) ? url('upload/client_images/' . $profileData->photo) : url('upload/no_image_user.webp') }}"
-                                                alt="" class="img-fluid rounded-circle d-block">
-                                        </div>
-                                    </div>
-                                    <div class="flex-grow-1">
-                                        <div>
-                                            <h5 class="font-size-16 mb-1">{{ $profileData->name }}</h5>
-                                            <p class="text-muted font-size-13">{{ $profileData->email }}</p>
-
-                                            <div
-                                                class="d-flex flex-wrap align-items-start gap-2 gap-lg-3 text-muted font-size-13">
-                                                <div><i
-                                                        class="mdi mdi-circle-medium me-1 text-success align-middle"></i>{{ $profileData->phone }}
-                                                </div>
-                                                <div><i
-                                                        class="mdi mdi-circle-medium me-1 text-success align-middle"></i>{{ $profileData->address }}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
+            <div class="col-xl-9 col-lg-10 mx-auto">
+                <div class="card shadow rounded-4 mb-4">
+                    <div class="card-body text-center">
+                        <img src="{{ !empty($profileData->photo) ? url('upload/client_images/' . $profileData->photo) : url('upload/no_image_user.webp') }}" 
+                            class="rounded-circle border border-3 border-primary mb-3" width="120" height="120" alt="Foto de perfil">
+                        <h5 class="mb-1">{{ $profileData->name }}</h5>
+                        <p class="text-muted mb-0">{{ $profileData->email }}</p>
+                        <p class="text-muted small">{{ $profileData->phone }} | {{ $profileData->address }}</p>
                     </div>
-                    <!-- end card body -->
                 </div>
-                <!-- end card -->
 
-                <div class="card shadow-sm rounded-4 p-4 mt-5">
-                    <form action="{{ route('client.profile.store') }}" method="post" enctype="multipart/form-data">
+                <div class="card shadow-sm rounded-4 p-4">
+                    <form action="{{ route('client.profile.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
+                        <div class="row g-3">
 
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div>
-                                    <div class="mb-3">
-                                        <label for="example-text-input" class="form-label">Nombre</label>
-                                        <input class="form-control" name="name" type="text" value="{{ $profileData->name }}" id="example-text-input">
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="example-text-input" class="form-label">Correo Electrónico</label>
-                                        <input class="form-control" name="email" type="email" value="{{ $profileData->email }}" id="example-text-input">
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="example-text-input" class="form-label">Teléfono</label>
-                                        <input class="form-control" name="phone" type="text" value="{{ $profileData->phone }}" id="example-text-input">
-                                    </div>
-                                </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Nombre</label>
+                                <input class="form-control" name="name" type="text" value="{{ $profileData->name }}">
                             </div>
 
-                            <div class="col-lg-6">
-                                <div class="mt-3 mt-lg-0">
-                                    <div class="mb-3">
-                                        <label for="example-text-input" class="form-label">Direccion</label>
-                                        <input class="form-control" name="address" type="text" value="{{ $profileData->address }}" id="example-text-input">
-                                    </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Correo Electrónico</label>
+                                <input class="form-control" name="email" type="email" value="{{ $profileData->email }}">
+                            </div>
 
-                                    <div class="mb-3">
-                                        <label for="example-text-input" class="form-label">Imagen de Perfil</label>
-                                        <input class="form-control" name="photo" type="file" id="image">
-                                    </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Teléfono</label>
+                                <input class="form-control" name="phone" type="text" value="{{ $profileData->phone }}">
+                            </div>
 
-                                    <div class="mb-3">
-                                        <img id="showImage" src="{{ !empty($profileData->photo) ? url('upload/client_images/' . $profileData->photo) : url('upload/no_image_user.webp') }}" alt="" class="rounded-circle p-1 bg-primary" width="150">
-                                    </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Ciudad</label>
+                                <select name="city_id" class="form-select">
+                                    <option disabled selected>-- Selecciona una Ciudad --</option>
+                                    @foreach ($city as $cit)
+                                        <option value="{{ $cit->id }}">{{ $cit->city_name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
 
-                                    <div class="mt-4">
-                                        <button type="submit" class="btn btn-primary waves-effect waves-light">Guardar Cambios</button>
-                                    </div>
-                                </div>
+                            <div class="col-12">
+                                <label class="form-label">Información del Restaurante</label>
+                                <textarea name="shop_info" class="form-control" rows="3" placeholder="Escribe una breve descripción...">{{ $profileData->shop_info }}</textarea>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="form-label">Dirección</label>
+                                <input class="form-control" name="address" type="text" value="{{ $profileData->address }}">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Foto de Portada</label>
+                                <input class="form-control" name="cover_photo" type="file" id="imagePortada">
+                                <img id="showImagePortada" src="{{ !empty($profileData->cover_photo) ? url('upload/client_images/' . $profileData->cover_photo) : url('upload/no-image.jpeg') }}" 
+                                    class="mt-2 rounded border" width="60%" height="auto" alt="Portada">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Foto de Perfil</label>
+                                <input class="form-control" name="photo" type="file" id="imagePerfil">
+                                <img id="showImagePerfil" src="{{ !empty($profileData->photo) ? url('upload/client_images/' . $profileData->photo) : url('upload/no_image_user.webp') }}" 
+                                    class="mt-2 bg-primary border-2" width="50%" height="auto" alt="Perfil">
+                            </div>
+
+                            <div class="col-12 text-center mt-3">
+                                <button type="submit" class="btn btn-success btn-lg rounded-pill px-4">Guardar Cambios</button>
                             </div>
                         </div>
                     </form>
                 </div>
 
             </div>
-            <!-- end col -->
         </div>
-        <!-- end row -->
-
-    </div> <!-- container-fluid -->
+    </div>
 </div>
 
+<!-- Scripts para previsualizar imagen -->
 <script type="text/javascript">
-
     $(document).ready(function(){
-        $('#image').change(function(e){
+        $('#imagePerfil').change(function(e){
             var reader = new FileReader();
-            reader.onload = function(e)
-            {
-                $('#showImage').attr('src', e.target.result);
+            reader.onload = function(e){
+                $('#showImagePerfil').attr('src', e.target.result);
             }
-            reader.readAsDataURL(e.target.files['0']);
-        })
-    })
+            reader.readAsDataURL(e.target.files[0]);
+        });
 
+        $('#imagePortada').change(function(e){
+            var reader = new FileReader();
+            reader.onload = function(e){
+                $('#showImagePortada').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(e.target.files[0]);
+        });
+    });
 </script>
-
 @endsection

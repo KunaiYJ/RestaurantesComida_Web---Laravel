@@ -17,7 +17,7 @@
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i data-feather="grid"></i>
+                        <i class="bx bxs-food-menu"></i>
                         <span data-key="t-apps">Menu</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -37,7 +37,7 @@
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i data-feather="grid"></i>
+                        <i class="bx bxs-store-alt"></i>
                         <span data-key="t-apps">Producto</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -50,6 +50,46 @@
                         <li>
                             <a href="{{ route('add.product') }}">
                                 <span data-key="t-chat">Agregar Producto</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <i class="bx bxs-camera"></i>
+                        <span data-key="t-apps">Galería</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li>
+                            <a href="{{ route('all.gallery') }}">
+                                <span data-key="t-calendar">Todas las Galería</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('add.gallery') }}">
+                                <span data-key="t-chat">Agregar Galería</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <i class="bx bxs-purchase-tag"></i>
+                        <span data-key="t-apps">Cupónes</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li>
+                            <a href="{{ route('all.coupon') }}">
+                                <span data-key="t-calendar">Cupones Disponibles</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('add.coupon') }}">
+                                <span data-key="t-chat">Agregar Cupónes</span>
                             </a>
                         </li>
                     </ul>

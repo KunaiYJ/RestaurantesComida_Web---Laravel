@@ -30,7 +30,7 @@
                             <table id="datatable" class="table table-bordered dt-responsive  nowrap w-100">
                                 <thead>
                                     <tr>
-                                        <th>Numero Serial</th>
+                                        <th>ID</th>
                                         <th>Ciudad</th>
                                         <th>Ciudad Slug</th>
                                         <th>Acciones</th>
