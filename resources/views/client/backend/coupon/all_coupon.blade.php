@@ -59,8 +59,8 @@
                         <span class="badge rounded-pill bg-danger">Invalido</span>
                     @endif
                 </td>
-                <td><a href="{{ route('edit.coupon',$item->id) }}" class="btn btn-info waves-effect waves-light">Editar</a>
-                <a href="{{ route('delete.coupon',$item->id) }}" class="btn btn-danger waves-effect waves-light" id="delete">Eliminar</a>
+                <td><a href="{{ route('edit.coupon',$item->id) }}" class="btn btn-info waves-effect waves-light"><i class="fas fa-edit"></i></a></a>
+                <a href="{{ route('delete.coupon',$item->id) }}" class="btn btn-danger waves-effect waves-light" id="delete"><i class="fas fa-trash-alt"></i></a>
                 </td> 
             </tr>
             @endforeach    

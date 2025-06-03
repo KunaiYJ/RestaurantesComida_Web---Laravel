@@ -46,8 +46,8 @@
                                             <td>{{ $item->category_name }}</td>
                                             <td><img src="{{ asset($item->image) }}" style="width: 70px; height: 4-px"></td>
                                             <td>
-                                                <a href="{{ route('edit.category', $item->id) }}" class="btn btn-primary btn-rounded waves-effect waves-light">Editar</a>
-                                                <a href="{{ route('delete.category', $item->id) }}" class="btn btn-danger btn-rounded waves-effect waves-light" id="delete">Eliminar</a>
+                                                <a href="{{ route('edit.category', $item->id) }}" class="btn btn-primary btn-rounded waves-effect waves-light"><i class="fas fa-edit"></i></a></a>
+                                                <a href="{{ route('delete.category', $item->id) }}" class="btn btn-danger btn-rounded waves-effect waves-light" id="delete"><i class="fas fa-trash-alt"></i></a>
                                             </td>
                                         </tr>
 

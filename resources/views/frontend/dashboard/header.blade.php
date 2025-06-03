@@ -20,6 +20,9 @@
     <link href="{{ asset('frontend/vendor/select2/css/select2.min.css') }}" rel="stylesheet">
     <!-- Custom styles for this template-->
     <link href="{{ asset('frontend/css/osahan.css') }}" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ asset('frontend/vendor/owl-carousel/owl.carousel.css') }}">
+      <link rel="stylesheet" href="{{ asset('frontend/vendor/owl-carousel/owl.theme.css') }}">
 </head>
 
 <body>
@@ -55,13 +58,13 @@
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">
                             <img alt="Generic placeholder image" src="{{ !empty($profileData->photo) ? url('upload/user_images/' . $profileData->photo) : url('upload/no_image_user.webp') }}"
-                                class="nav-osahan-pic rounded-pill"> My Account
+                                class="nav-osahan-pic rounded-pill"> Mi Cuenta
                         </a>
                         <div class="dropdown-menu dropdown-menu-right shadow-sm border-0">
                             <a class="dropdown-item" href="{{ route('dashboard') }}"><i class="icofont-food-cart"></i>
                                 Dashboard</a>
                             <a class="dropdown-item" href="{{ route('user.logout') }}"><i class="icofont-sale-discount"></i>
-                                Logout</a>
+                                Cerrar Sesión</a>
                         </div>
                     </li>
                     <li class="nav-item dropdown dropdown-cart">

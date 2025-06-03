@@ -54,7 +54,7 @@
                                 <select name="city_id" class="form-select">
                                     <option disabled selected>-- Selecciona una Ciudad --</option>
                                     @foreach ($city as $cit)
-                                        <option value="{{ $cit->id }}">{{ $cit->city_name }}</option>
+                                        <option value="{{ $cit->id }}" {{ $cit->id == $profileData->city_id ? 'selected' : '' }}>{{ $cit->city_name }}</option>
                                     @endforeach
                                 </select>
                             </div>
