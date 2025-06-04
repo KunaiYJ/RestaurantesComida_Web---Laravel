@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth; 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Client;
 use App\Models\Menu;
@@ -48,5 +48,17 @@ class HomeController extends Controller
     {
         $wishlist = Wishlist::where('user_id', Auth::id())->get();
         return view('frontend.dashboard.all_wishlist', compact('wishlist'));
+    }
+
+    public function RemoveWishlist($id)
+    {
+        Wishlist::find($id)->delete();
+
+        $notification = array(
+            'message' => '¡Favorito eliminado Correctamente!',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->back()->with($notification);
     }
 }

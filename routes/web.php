@@ -10,6 +10,7 @@ use App\Http\Controllers\Client\RestaurantController;
 use App\Http\Controllers\Client\CouponController;
 use App\Http\Controllers\Admin\ManageController;
 use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\CartController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -18,7 +19,7 @@ use App\Http\Controllers\Frontend\HomeController;
 Route::get('/', [UserController::class, 'Index'])->name('index');
 
 Route::get('/dashboard', function () {
-    return view('frontend.dashboard.dashboard');
+    return view('frontend.dashboard.profile');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -29,6 +30,7 @@ Route::middleware('auth')->group(function () {
 
     // Get Wishlist data fot user
     Route::get('/all/wishlist', [HomeController::class, 'AllWishlist'])->name('all.wishlist');
+    Route::get('/remove/wishlist/{id}', [HomeController::class, 'RemoveWishlist'])->name('remove.wishlist');
 });
 
 require __DIR__.'/auth.php';
@@ -160,4 +162,10 @@ Route::get('/changeStatus', [RestaurantController::class, 'ChangeStatus']);
 Route::controller(HomeController::class)->group(function(){
     Route::get('/restaurant/details/{id}', 'RestaurantDetails')->name('res.details');
     Route::post('/add-wish-list/{id}', 'AddWishList');
+});
+
+Route::controller(CartController::class)->group(function(){
+    Route::get('/add_to_cart/{id}', 'AddToCart')->name('add_to_cart');
+    Route::post('/car/update-quantity', 'UpdateCartQuantity')->name('cart.updateQuantity');
+    Route::post('/cart/remove', 'CartRemove')->name('cart.remove');
 });

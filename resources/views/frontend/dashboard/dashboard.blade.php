@@ -1,139 +1,81 @@
-@include('frontend.dashboard.header')
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" >
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="Askbootstrap">
+        <meta name="author" content="Askbootstrap">
+        <meta name="csrf-token" content="{{ csrf_token() }}" >
+        <title>Dashboard de Usuario - Online Food Ordering Website HTML Template</title>
+        <!-- Favicon Icon -->
+        <link rel="icon" type="image/png" href="{{ asset('frontend/img/favicon.png') }}">
+        <!-- Bootstrap core CSS-->
+        <link href="{{ asset('frontend/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+        <!-- Font Awesome-->
+        <link href="{{ asset('frontend/vendor/fontawesome/css/all.min.css') }}" rel="stylesheet">
+        <!-- Font Awesome-->
+        <link href="{{ asset('frontend/vendor/icofont/icofont.min.css') }}" rel="stylesheet">
+        <!-- Select2 CSS-->
+        <link href="{{ asset('frontend/vendor/select2/css/select2.min.css') }}" rel="stylesheet">
+        <!-- Custom styles for this template-->
+        <link href="{{ asset('frontend/css/osahan.css') }}" rel="stylesheet">
 
-@php
-    $id = Auth::user()->id;
-    $profileData = App\Models\User::find($id);
-@endphp
+        <link rel="stylesheet" href="{{ asset('frontend/vendor/owl-carousel/owl.carousel.css') }}">
+        <link rel="stylesheet" href="{{ asset('frontend/vendor/owl-carousel/owl.theme.css') }}">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" >
+    </head>
+    <body>
+    
+        @include('frontend.dashboard.header')
 
-<section class="section pt-4 pb-4 osahan-account-page">
-    <div class="container">
-        <div class="row">
+        @yield('dashboard')
 
-            @include('frontend.dashboard.sidebar')
+        @include('frontend.dashboard.footer')
 
-            <div class="col-md-9">
-                <div class="osahan-account-page-right rounded shadow-sm bg-white p-4 h-100">
-                    <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade show active" id="orders" role="tabpanel" aria-labelledby="orders-tab">
-                            <h4 class="font-weight-bold mt-0 mb-4">Perfil de Usuario</h4>
+        <!-- jQuery -->
+        <script src="{{ asset('frontend/vendor/jquery/jquery-3.3.1.slim.min.js') }}"></script>
+        <!-- Bootstrap core JavaScript-->
+        <script src="{{ asset('frontend/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+        <!-- Select2 JavaScript-->
+        <script src="{{ asset('frontend/vendor/select2/js/select2.min.js') }}"></script>
+        <!-- Custom scripts for all pages-->
+        <script src="{{ asset('frontend/vendor/owl-carousel/owl.carousel.js') }}"></script>
+        <script src="{{ asset('frontend/js/custom.js') }}"></script>
 
-                            <div class="bg-white card mb-4 order-list shadow-sm">
-                                <div class="gold-members p-4">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
-                                    <form action="{{ route('profile.store') }}" method="post"
-                                        enctype="multipart/form-data">
-                                        @csrf
+        <script>
+            @if (Session::has('message'))
+                var type = "{{ Session::get('alert-type', 'info') }}"
+                switch (type) {
+                    case 'info':
+                        toastr.info(" {{ Session::get('message') }} ");
+                        break;
 
-                                        <div class="row">
-                                            <div class="col-lg-6">
-                                                <div>
-                                                    <div class="mb-3">
-                                                        <label for="example-text-input"
-                                                            class="form-label">Nombre</label>
-                                                        <input class="form-control" name="name" type="text"
-                                                            value="{{ $profileData->name }}" id="example-text-input">
-                                                    </div>
+                    case 'success':
+                        toastr.success(" {{ Session::get('message') }} ");
+                        break;
 
-                                                    <div class="mb-3">
-                                                        <label for="example-text-input" class="form-label">Correo
-                                                            Electrónico</label>
-                                                        <input class="form-control" name="email" type="email"
-                                                            value="{{ $profileData->email }}" id="example-text-input">
-                                                    </div>
+                    case 'warning':
+                        toastr.warning(" {{ Session::get('message') }} ");
+                        break;
 
-                                                    <div class="mb-3">
-                                                        <label for="example-text-input"
-                                                            class="form-label">Teléfono</label>
-                                                        <input class="form-control" name="phone" type="text"
-                                                            value="{{ $profileData->phone }}" id="example-text-input">
-                                                    </div>
-                                                </div>
-                                            </div>
+                    case 'error':
+                        toastr.error(" {{ Session::get('message') }} ");
+                        break;
+                }
+            @endif
+        </script>
 
-                                            <div class="col-lg-6">
-                                                <div class="mt-3 mt-lg-0">
-                                                    <div class="mb-3">
-                                                        <label for="example-text-input"
-                                                            class="form-label">Direccion</label>
-                                                        <input class="form-control" name="address" type="text"
-                                                            value="{{ $profileData->address }}" id="example-text-input">
-                                                    </div>
-
-                                                    <div class="mb-3">
-                                                        <label for="example-text-input" class="form-label">Imagen de
-                                                            Perfil</label>
-                                                        <input class="form-control" name="photo" type="file"
-                                                            id="image">
-                                                    </div>
-
-                                                    <div class="mb-3">
-                                                        <img id="showImage"
-                                                            src="{{ !empty($profileData->photo) ? url('upload/user_images/' . $profileData->photo) : url('upload/no_image_user.webp') }}"
-                                                            alt="" class="rounded-circle p-1 bg-primary"
-                                                            width="150">
-                                                    </div>
-
-                                                    <div class="mt-4">
-                                                        <button type="submit"
-                                                            class="btn btn-primary waves-effect waves-light">Guardar
-                                                            Cambios</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<script type="text/javascript">
-
-    $(document).ready(function(){
-        $('#image').change(function(e){
-            var reader = new FileReader();
-            reader.onload = function(e)
-            {
-                $('#showImage').attr('src', e.target.result);
-            }
-            reader.readAsDataURL(e.target.files['0']);
-        })
-    })
-
-</script>
-
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
-<script>
- @if(Session::has('message'))
- var type = "{{ Session::get('alert-type','info') }}"
- switch(type){
-    case 'info':
-    toastr.info(" {{ Session::get('message') }} ");
-    break;
-
-    case 'success':
-    toastr.success(" {{ Session::get('message') }} ");
-    break;
-
-    case 'warning':
-    toastr.warning(" {{ Session::get('message') }} ");
-    break;
-
-    case 'error':
-    toastr.error(" {{ Session::get('message') }} ");
-    break; 
- }
- @endif 
-</script>
-
-
-@include('frontend.dashboard.footer')
+        <script type="text/javascript">
+                $.ajaxSetup({
+                    headers:{
+                    'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+        </script>
+   </body>
+</html>

@@ -1,4 +1,6 @@
-@include('frontend.dashboard.header')
+@extends('frontend.dashboard.dashboard')
+@section('dashboard')
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
 
@@ -10,60 +12,34 @@
 
             <div class="col-md-9">
                 <div class="osahan-account-page-right rounded shadow-sm bg-white p-4 h-100">
-                    <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade show active" id="orders" role="tabpanel"
-                            aria-labelledby="orders-tab">
-                            <h4 class="font-weight-bold mt-0 mb-4">Lista de Favoritos</h4>
-
-                            <div class="bg-white card mb-4 order-list shadow-sm">
-                                <div class="gold-members p-4">
-
-                                    <form action="{{ route('user.password.update') }}" method="post"
-                                        enctype="multipart/form-data">
-                                        @csrf
-
-                                        <div class="row">
-                                            <div class="col-lg-12">
-                                                <div>
-                                                    <div class="mb-6">
-                                                        <label for="example-text-input" class="form-label">Contraseña
-                                                            Actual</label>
-                                                        <input
-                                                            class="form-control @error('old_password') is-invalid @enderror"
-                                                            name="old_password" type="password" id="old_password">
-                                                        @error('old_password')
-                                                            <span class="text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-
-                                                    <div class="mb-6">
-                                                        <label for="example-text-input" class="form-label">Nueva
-                                                            Contraseña</label>
-                                                        <input
-                                                            class="form-control @error('new_password') is-invalid @enderror"
-                                                            name="new_password" type="password" id="new_password">
-                                                        @error('new_password')
-                                                            <span class="text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-
-                                                    <div class="mb-6">
-                                                        <label for="example-text-input" class="form-label">Confirmar
-                                                            nueva Contraseña</label>
-                                                        <input class="form-control" name="new_password_confirmation"
-                                                            type="password" id="new_password_confirmation">
-                                                    </div>
-
-                                                    <button type="submit"
-                                                        class="btn btn-success rounded waves-effect waves-light mt-4">Guardar
-                                                        Cambios</button>
-                                                </div>
+                    <div class="tab-pane">
+                        <h4 class="font-weight-bold mt-0 mb-4">Favoritos</h4>
+                        <div class="row">
+                            @foreach ($wishlist as $wish)
+                                <div class="col-md-4 col-sm-6 mb-4 pb-2">
+                                    <div class="list-card bg-white h-100 rounded overflow-hidden position-relative shadow-sm">
+                                    <div class="list-card-image">
+                                        <a href="{{ route('res.details', $wish->client_id) }}">
+                                        <img src="{{ asset('upload/client_images/' . $wish['client']['photo']) }}" class="img-fluid item-img" style="width: 300px; height: 200px">
+                                        </a>
+                                    </div>
+                                    <div class="p-3 position-relative">
+                                        <div class="list-card-body">
+                                            <h6 class="mb-1">
+                                                <a href="{{ route('res.details', $wish->client_id) }}" class="text-black">
+                                                    {{ $wish['client']['name'] }}
+                                                </a>
+                                            </h6>
+                                            <div style="float: right; margin-bottom: 10px">
+                                                <a href="{{ route('remove.wishlist', $wish->id) }}" class="badge badge-danger" style="font-size: 10px; padding: 5px 10px;">
+                                                    <i class="icofont-ui-delete" style="font-size: 24px;"></i>
+                                                </a>
                                             </div>
                                         </div>
-                                    </form>
-
+                                    </div>
+                                    </div>
                                 </div>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -72,30 +48,4 @@
     </div>
 </section>
 
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
-<script>
-    @if (Session::has('message'))
-        var type = "{{ Session::get('alert-type', 'info') }}"
-        switch (type) {
-            case 'info':
-                toastr.info(" {{ Session::get('message') }} ");
-                break;
-
-            case 'success':
-                toastr.success(" {{ Session::get('message') }} ");
-                break;
-
-            case 'warning':
-                toastr.warning(" {{ Session::get('message') }} ");
-                break;
-
-            case 'error':
-                toastr.error(" {{ Session::get('message') }} ");
-                break;
-        }
-    @endif
-</script>
-
-
-@include('frontend.dashboard.footer')
+@endsection
