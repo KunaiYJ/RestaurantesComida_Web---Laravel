@@ -550,14 +550,32 @@
                     </div>
                 </div>
             </div>
+
+            @php
+                use Carbon\Carbon;
+                $coupon = App\Models\Coupon::where('client_id', $client->id)
+                                            ->where('validity', '>=', Carbon::now()->format('Y-m-d'))
+                                            ->latest()->first();
+            @endphp
+
             <div class="col-md-4">
                 <div class="pb-2">
                     <div
                         class="bg-white rounded shadow-sm text-white mb-4 p-4 clearfix restaurant-detailed-earn-pts card-icon-overlap">
-                        <img class="img-fluid float-left mr-3" src="img/earn-score-icon.png">
-                        <h6 class="pt-0 text-primary mb-1 font-weight-bold">OFFER</h6>
-                        <p class="mb-0">60% off on orders above $99 | Use coupon <span
-                                class="text-danger font-weight-bold">OSAHAN50</span></p>
+                        <img class="img-fluid float-left mr-3" src="{{ asset('frontend/img/earn-score-icon.png') }}">
+                        <h6 class="pt-0 text-primary mb-1 font-weight-bold">¡ OFERTA !</h6>
+
+                        {{-- <pre>{{ print_r(Session::get('coupon'), true) }}</pre> --}}
+
+                        @if ($coupon == NULL)
+                            <p class="mb-0"> No hay cupón disponible </p>
+                        @else
+                            <p class="mb-0"> 
+                                {{ $coupon->discount }}% De descuento en -
+                                <span class="text-success font-weight-bold"> {{ $coupon->coupon_name }} </span>
+                            </p>
+                        @endif
+                        
                         <div class="icon-overlap">
                             <i class="icofont-sale-discount"></i>
                         </div>
@@ -565,7 +583,7 @@
                 </div>
                 <div class="generator-bg rounded shadow-sm mb-4 p-4 osahan-cart-item">
                     <h5 class="mb-1 text-white">Tus Ordenes</h5>
-                    <p class="mb-4 text-white">{{ count((array) session('cart')) }} Seleccionados</p>
+                    <p class="mb-4 text-white">{{ count((array) session('cart')) }} Productos Seleccionados</p>
                     <div class="bg-white rounded shadow-sm mb-2">
                         @php $total = 0 @endphp
                         @if (session('cart'))
@@ -600,22 +618,73 @@
                                 </div>
                             @endforeach
                         @endif
-
                     </div>
+
+                    @if (Session::has('coupon'))
+                        <div class="mb-2 bg-white rounded p-2 clearfix">
+                            <p class="mb-1">
+                                Item Total 
+                                <span class="float-right text-dark">{{ count((array) session('cart')) }}</span>
+                            </p>
+                            <p class="mb-1">
+                                Nombre del Cupon
+                                <span class="float-right text-dark">
+                                    {{ (session()->get('coupon')['coupon_name']) }} 
+                                    ( {{ (session()->get('coupon')['discount']) }} %)
+                                </span>
+                                <a type="submit" onclick="couponRemove()">
+                                    <i class="icofont-ui-delete float-right" style="color: red;"></i>
+                                </a>
+                            </p>
+                            <p class="mb-1 text-success">Descuento Total 
+                                <span class="float-right text-success">
+                                    @if (Session::has('coupon'))
+                                        ${{ $total - Session()->get('coupon')['discount_amount'] }}
+                                    @else
+                                        ${{ $total }}
+                                    @endif
+                                </span>
+                            </p>
+                            <hr />
+                            <h6 class="font-weight-bold mb-0">Pagar
+                                <span class="float-right">
+                                    @if (Session::has('coupon'))
+                                        ${{ Session()->get('coupon')['discount_amount'] }}
+                                    @else
+                                        ${{ $total }}
+                                    @endif
+                                </span>
+                            </h6>
+                        </div>
+                    @else
+                        <div class="mb-2 bg-white rounded p-2 clearfix">
+                            <div class="input-group input-group-sm mb-2">
+                            <input type="text" class="form-control" placeholder="Código promocional" id="coupon_name">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="submit" id="button-addon2" onclick="ApplyCoupon()">
+                                    <i class="icofont-sale-discount"></i> APLICAR </button>
+                            </div>
+                            </div>
+                        </div>
+                    @endif
+
                     <div class="mb-2 bg-white rounded p-2 clearfix">
                         <img class="img-fluid float-left" src="{{ asset('frontend/img/wallet-icon.png') }}">
-                        <h6 class="font-weight-bold text-right mb-2">Subtotal : <span
-                                class="text-danger">${{ $total }}</span></h6>
+                        <h6 class="font-weight-bold text-right mb-2">
+                            Subtotal : 
+                            <span class="text-danger">
+                                @if (Session::has('coupon'))
+                                    ${{ Session()->get('coupon')['discount_amount'] }}
+                                @else
+                                    ${{ $total }}
+                                @endif
+                            </span>
+                        </h6>
                         <p class="seven-color mb-1 text-right">Pueden aplicarse cargos adicionales</p>
-                        <p class="text-black mb-0 text-right">Ha ahorrado $955 en su factura</p>
                     </div>
-                    <a href="checkout.html" class="btn btn-success btn-block btn-lg">Pagar <i
-                            class="icofont-long-arrow-right"></i></a>
-                </div>
-
-                <div class="text-center pt-2 mb-4">
-                </div>
-                <div class="text-center pt-2">
+                    <a href="{{ route('checkout') }}" class="btn btn-success btn-block btn-lg">
+                        Verificar <i class="icofont-long-arrow-right"></i>
+                    </a>
                 </div>
             </div>
         </div>

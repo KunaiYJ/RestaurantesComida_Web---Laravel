@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use App\Models\Product;
+use App\Models\Coupon;
 use Carbon\Carbon;
 
 class CartController extends Controller
@@ -17,6 +18,10 @@ class CartController extends Controller
 
     public function AddToCart($id)
     {
+        if (Session::has('coupon')) {
+            Session::forget('coupon');
+        }
+
         $products = Product::find($id);
         $cart = session()->get('cart', []);
         if (isset($cart[$id])) {
@@ -71,5 +76,89 @@ class CartController extends Controller
             'message' => 'Producto removido del Carrito',
             'alert-type' => 'success'
         ]);
+    }
+
+    public function ApplyCoupon(Request $request)
+    {
+        $coupon = Coupon::where('coupon_name', $request->coupon_name)
+            ->where('validity', '>=', Carbon::now()->format('Y-m-d'))->first();
+
+        $cart = session()->get('cart', []);
+        $totalAmount = 0;
+        $clientIds = [];
+        
+        foreach ($cart as $car) {
+            $totalAmount += ($car['price'] * $car['quantity']);
+            $pd = Product::find($car['id']);
+            $cid = $pd->client_id;
+            array_push($clientIds, $cid);
+        }
+
+        if ($coupon) {
+            if (count(array_unique($clientIds)) === 1) {
+                $cvendorId = $coupon->client_id;
+
+                if ($cvendorId == $clientIds[0]) {
+                    Session::put('coupon', [
+                        'coupon_name' => $coupon->coupon_name,
+                        'discount' => $coupon->discount,
+                        'discount_amount' => $totalAmount - ($totalAmount * $coupon->discount/100),
+                    ]);
+                    $couponData = Session()->get('coupon');
+
+                    return response()->json(array(
+                        'validity' => true,
+                        'success' => '¡Cupón Aplicado Correctamente!',
+                        'couponData' => $couponData,
+                    ));
+                }else{
+                    return response()->json(['error' => 'Este cupón no es valido para este Restaurante']);
+                }
+            }else{
+                return response()->json(['error' => 'Este cupón es para uno de los restaurantes seleccionados']);
+            }
+        }else{
+            return response()->json(['error' => 'Cupón Invalido']);
+        }
+    }
+
+    public function RemoveCoupon()
+    {
+        Session::forget('coupon');
+        return response()->json(['success' => 'Cupón removido Correctamente']);
+    }
+
+    public function ShopCheckout()
+    {
+        if (Auth::check()) {
+            
+            $cart = session()->get('cart', []);
+            $totalAmount = 0;
+            
+            foreach ($cart as $car) {
+                $totalAmount += $car['price'];
+            }
+
+            if ($totalAmount > 0) {
+                return view('frontend.checkout.view_checkout', compact('cart'));
+            } else {
+                
+                $notification = array(
+                    'message' => '¡Compre un producto de la lista!',
+                    'alert-type' => 'error'
+                );
+                return redirect()->to('/')->with($notification);
+                
+            }
+            
+        }else{
+            
+            $notification = array(
+                'message' => '¡Por favor, inicie sesión primero!',
+                'alert-type' => 'error'
+            );
+            return redirect()->route('login')->with($notification);
+
+        }
     }
 }
