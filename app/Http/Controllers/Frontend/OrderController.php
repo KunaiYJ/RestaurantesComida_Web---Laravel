@@ -53,7 +53,7 @@ class OrderController extends Controller
             'order_month' => Carbon::now()->format('F'),
             'order_year' => Carbon::now()->format('Y'),
 
-            'status' => 'Pending',
+            'status' => 'Pendiente',
             'created_at' => Carbon::now(),
         ]);
 

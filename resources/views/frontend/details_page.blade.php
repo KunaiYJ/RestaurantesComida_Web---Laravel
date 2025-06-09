@@ -523,29 +523,75 @@
                                 <a class="text-center w-100 d-block mt-4 font-weight-bold" href="#">See All
                                     Reviews</a>
                             </div>
+
                             <div class="bg-white rounded shadow-sm p-4 mb-5 rating-review-select-page">
-                                <h5 class="mb-4">Leave Comment</h5>
-                                <p class="mb-2">Rate the Place</p>
-                                <div class="mb-4">
-                                    <span class="star-rating">
-                                        <a href="#"><i class="icofont-ui-rating icofont-2x"></i></a>
-                                        <a href="#"><i class="icofont-ui-rating icofont-2x"></i></a>
-                                        <a href="#"><i class="icofont-ui-rating icofont-2x"></i></a>
-                                        <a href="#"><i class="icofont-ui-rating icofont-2x"></i></a>
-                                        <a href="#"><i class="icofont-ui-rating icofont-2x"></i></a>
-                                    </span>
-                                </div>
-                                <form>
-                                    <div class="form-group">
-                                        <label>Your Comment</label>
-                                        <textarea class="form-control"></textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <button class="btn btn-primary btn-sm" type="button"> Submit Comment
-                                        </button>
-                                    </div>
-                                </form>
+
+                                @guest
+                                    <p><b>Para Agregar una Reseña al Restaurante. Inicia Sesión 
+                                        <a href="{{ route('login') }}">¡Inicia Aqui!</a> 
+                                    </b></p>
+                                @else
+                                    <style>
+                                        .star-rating {
+                                            display: flex;
+                                            flex-direction: row-reverse;
+                                            justify-content: flex-end;
+                                        }
+                                        .star-rating label {
+                                            font-size: 2.5rem;
+                                            columns: #ccc;
+                                            cursor: pointer;
+                                            transition: transform 0.2s ease, color 0.2s ease;
+                                        }
+                                        .star-rating input {
+                                            display: none;
+                                        }
+                                        .star-rating label:hover,
+                                        .star-rating label:hover ~ label {
+                                            color: #ffda44;
+                                            transform: scale(1.2);
+                                        }
+                                        .star-rating input:checked ~ label {
+                                            color: #ffc300;
+                                        }
+                                        .star-rating input:checked ~ label:hover {
+                                            transform: scale(1.3);
+                                        }
+                                    </style>
+
+                                    <h5 class="mb-4">Deja un comentario</h5>
+                                    <p class="mb-2">Califica el Lugar</p>
+                                    <form method="post" action="{{ route('store.review') }}">
+                                        @csrf
+                                        <input type="hidden" name="client_id" value="{{ $client->id }}">
+                                        <div class="mb-4">
+                                            <div class="star-rating">
+                                                <input type="radio" id="star5" name="rating" value="5">
+                                                <label for="star5">&#9733;</label>
+                                                <input type="radio" id="star4" name="rating" value="4">
+                                                <label for="star4">&#9733;</label>
+                                                <input type="radio" id="star3" name="rating" value="3">
+                                                <label for="star3">&#9733;</label>
+                                                <input type="radio" id="star2" name="rating" value="2">
+                                                <label for="star2">&#9733;</label>
+                                                <input type="radio" id="star1" name="rating" value="1">
+                                                <label for="star1">&#9733;</label>
+                                            </div>
+                                        </div>
+                                    
+                                        <div class="form-group">
+                                            <label>Tu Comentario</label>
+                                            <textarea class="form-control" name="comment" id="comment"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <button class="btn btn-primary btn-sm" type="submit"> 
+                                                Agregar Comentario
+                                            </button>
+                                        </div>
+                                    </form>
+                                @endguest
                             </div>
+                            
                         </div>
                     </div>
                 </div>

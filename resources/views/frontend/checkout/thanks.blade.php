@@ -8,7 +8,7 @@
                 <img class="img-fluid" src="{{ asset('frontend/img/404.png') }}" alt="404">
                 <h1 class="mt-2 mb-2">¡Orden Completada, Gracias!</h1>
                 <p></p>
-                <a class="btn btn-primary btn-lg" href="index.html">Home</a>
+                <a class="btn btn-primary btn-lg" href="{{ url('/') }}">Home</a>
             </div>
         </div>
     </div>

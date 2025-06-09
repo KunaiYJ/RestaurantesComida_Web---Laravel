@@ -5,13 +5,16 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Admin\ManageOrderController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ManageController;
+use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Client\RestaurantController;
 use App\Http\Controllers\Client\CouponController;
-use App\Http\Controllers\Admin\ManageController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\OrderController;
+use App\Http\Controllers\Frontend\ReviewController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -32,6 +35,12 @@ Route::middleware('auth')->group(function () {
     // Get Wishlist data fot user
     Route::get('/all/wishlist', [HomeController::class, 'AllWishlist'])->name('all.wishlist');
     Route::get('/remove/wishlist/{id}', [HomeController::class, 'RemoveWishlist'])->name('remove.wishlist');
+
+    Route::controller(ManageOrderController::class)->group(function(){
+        Route::get('/user/order/list', 'UserOrderList')->name('user.order.list');
+        Route::get('/user/order/details/{id}', 'UserOrderDetails')->name('user.order.details');
+        Route::get('/user/invoice/download/{id}', 'UserInvoiceDownload')->name('user.invoice.download');
+    });
 });
 
 require __DIR__.'/auth.php';
@@ -115,6 +124,27 @@ Route::middleware('admin')->group(function (){
         Route::get('/delete/banner/{id}', 'DeleteBanner')->name('delete.banner');
     });
 
+    Route::controller(ManageOrderController::class)->group(function(){
+        Route::get('/pending/order', 'PendingOrder')->name('pending.order');
+        Route::get('/confirm/order', 'ConfirmOrder')->name('confirm.order');
+        Route::get('/processing/order', 'ProcessingOrder')->name('processing.order');
+        Route::get('/deliverd/order', 'DeliverdOrder')->name('deliverd.order');
+        Route::get('/admin/order/details/{id}', 'AdminOrderDetails')->name('admin.order.details');
+    });
+
+    Route::controller(ManageOrderController::class)->group(function(){
+        Route::get('/pening_to_confirm/{id}', 'PendingToConfirm')->name('pening_to_confirm');
+        Route::get('/confirm_to_processing/{id}', 'ConfirmToProcessing')->name('confirm_to_processing');
+        Route::get('/processing_to_deliverd/{id}', 'ProcessingToDeliverd')->name('processing_to_deliverd');
+    });
+
+    Route::controller(ReportController::class)->group(function(){
+        Route::get('/admin/all/reports', 'AdminAllReports')->name('admin.all.reports');
+        Route::post('/admin/search/bydate', 'AdminSearchByDate')->name('admin.search.bydate');
+        Route::post('/admin/search/bymonth', 'AdminSearchByMonth')->name('admin.search.bymonth');
+        Route::post('/admin/search/byyear', 'AdminSearchByYear')->name('admin.search.byyear');
+    });
+
 });
 
 Route::middleware(['client', 'status'])->group(function () {
@@ -154,6 +184,18 @@ Route::middleware(['client', 'status'])->group(function () {
         Route::post('/update/coupon', 'UpdateCoupon')->name('coupon.update');
         Route::get('/delete/coupon/{id}', 'DeleteCoupon')->name('delete.coupon');
     });
+
+    Route::controller(ManageOrderController::class)->group(function(){
+        Route::get('/all/client/orders', 'AllClientOrders')->name('all.client.orders');
+        Route::get('/client/order/details/{id}', 'ClientOrderDetails')->name('client.order.details');
+    });
+
+    Route::controller(ReportController::class)->group(function(){
+        Route::get('/client/all/reports', 'ClientAllReports')->name('client.all.reports');
+        Route::post('/client/search/bydate', 'ClientSearchByDate')->name('client.search.bydate');
+        Route::post('/client/search/bymonth', 'ClientSearchByMonth')->name('client.search.bymonth');
+        Route::post('/client/search/byyear', 'ClientSearchByYear')->name('client.search.byyear');
+    });
     
 });
 
@@ -176,4 +218,8 @@ Route::controller(CartController::class)->group(function(){
 
 Route::controller(OrderController::class)->group(function(){
     Route::post('/cash_order', 'CashOrder')->name('cash_order');
+});
+
+Route::controller(ReviewController::class)->group(function(){
+    Route::post('/store/review', 'StoreReview')->name('store.review');
 });

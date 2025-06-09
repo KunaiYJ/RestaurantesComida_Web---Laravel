@@ -17,7 +17,7 @@
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i data-feather="grid"></i>
+                        <i class="fas fa-utensils"></i>
                         <span data-key="t-apps">Categorias</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -37,7 +37,7 @@
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i data-feather="grid"></i>
+                        <i class="fas fa-city"></i>
                         <span data-key="t-apps">Ciudad</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -51,7 +51,7 @@
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i data-feather="grid"></i>
+                        <i class="fas fa-hamburger"></i>
                         <span data-key="t-apps">Gestionar Productos</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -71,7 +71,7 @@
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i data-feather="grid"></i>
+                        <i class="fas fa-wine-glass-alt"></i>
                         <span data-key="t-apps">Gestionar Restaurante</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -91,7 +91,7 @@
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i data-feather="grid"></i>
+                        <i class="fas fa-image"></i>
                         <span data-key="t-apps">Gestionar Banner</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -103,16 +103,44 @@
                     </ul>
                 </li>
 
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <i class="fas fa-clipboard-list"></i>
+                        <span data-key="t-apps">Gestionar Ordenes</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li>
+                            <a href="{{ route('pending.order') }}">
+                                <span data-key="t-calendar">Ordenes Pendientes</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('confirm.order') }}">
+                                <span data-key="t-calendar">Ordenes Confirmadas</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('processing.order') }}">
+                                <span data-key="t-calendar">Ordenes en Proceso</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('deliverd.order') }}">
+                                <span data-key="t-calendar">Ordenes a Entregar</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
                 <li class="menu-title mt-2" data-key="t-components">Elements</li>
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i data-feather="briefcase"></i>
-                        <span data-key="t-components">Components</span>
+                        <span data-key="t-components">Gestionar Reportes</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="ui-alerts.html" data-key="t-alerts">Alerts</a></li>
-                        <li><a href="ui-buttons.html" data-key="t-buttons">Buttons</a></li>
+                        <li><a href="{{ route('admin.all.reports') }}" data-key="t-alerts">Todos los Reportes</a></li>
                     </ul>
                 </li>
 

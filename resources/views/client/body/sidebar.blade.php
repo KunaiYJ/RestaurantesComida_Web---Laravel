@@ -103,6 +103,34 @@
                         </ul>
                     </li>
 
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow">
+                            <i class="fas fa-clipboard-list"></i>
+                            <span data-key="t-apps">Gestionar Pedidos</span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            <li>
+                                <a href="{{ route('all.client.orders') }}">
+                                    <span data-key="t-calendar">Todas las Ordenes</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow">
+                            <i class="fas fa-clipboard-list"></i>
+                            <span data-key="t-apps">Gestionar Reportes</span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            <li>
+                                <a href="{{ route('client.all.reports') }}">
+                                    <span data-key="t-calendar">Todos los Reportes</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
                 @else 
 
                 @endif
